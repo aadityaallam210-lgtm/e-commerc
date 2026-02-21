@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NÒVA — Curated Modern Living</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0908;
+  --surface: #131110;
+  --card: #181614;
+  --border: #2a2520;
+  --text: #f0ebe3;
+  --muted: #7a7268;
+  --accent: #c9a84c;
+  --accent2: #e8d5a3;
+  --red: #c0392b;
+  --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Custom cursor */
+.cursor {
+  width: 10px; height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 48px;
+  background: linear-gradient(to bottom, rgba(10,9,8,0.98), transparent);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--text); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cart-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 20px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.cart-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 10px;
+  font-weight: 500;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+/* ── HERO ── */
+.hero {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 64px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+  animation: fadeUp 1s ease 0.2s both;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 8vw, 110px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+  animation: fadeUp 1s ease 0.4s both;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--accent2);
+}
+
+.hero-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 38ch;
+  margin-bottom: 44px;
+  animation: fadeUp 1s ease 0.6s both;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  animation: fadeUp 1s ease 0.8s both;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 14px 36px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.3s;
+}
+.btn-primary:hover { background: var(--accent2); }
+
+.btn-ghost {
+  background: none;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 14px 36px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.3s;
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+.hero-right {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1510 0%, #2d2418 40%, #1a1008 100%);
+  position: relative;
+  animation: fadeIn 1.5s ease both;
+}
+
+/* Decorative geometric on hero */
+.hero-image::before {
+  content: '';
+  position: absolute;
+  top: 20%; right: 15%;
+  width: 260px; height: 380px;
+  border: 1px solid rgba(201,168,76,0.2);
+  transform: rotate(8deg);
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  top: 25%; right: 20%;
+  width: 180px; height: 280px;
+  background: linear-gradient(160deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+  transform: rotate(8deg);
+}
+
+.hero-product-mock {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.mock-product-img {
+  width: 200px;
+  height: 260px;
+  background: linear-gradient(145deg, #2a2018, #3d3020);
+  border: 1px solid rgba(201,168,76,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mock-product-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 30%, rgba(201,168,76,0.1) 0%, transparent 60%);
+}
+
+.mock-lamp {
+  width: 60px;
+  height: 100px;
+  position: relative;
+}
+
+.lamp-shade {
+  width: 0;
+  height: 0;
+  border-left: 35px solid transparent;
+  border-right: 35px solid transparent;
+  border-bottom: 55px solid rgba(201,168,76,0.4);
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+}
+
+.lamp-stem {
+  width: 4px;
+  height: 35px;
+  background: rgba(201,168,76,0.5);
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lamp-base {
+  width: 40px;
+  height: 8px;
+  background: rgba(201,168,76,0.4);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mock-product-label {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.hero-stats {
+  position: absolute;
+  bottom: 48px;
+  right: 40px;
+  display: flex;
+  gap: 32px;
+  animation: fadeUp 1s ease 1s both;
+}
+
+.stat {
+  text-align: right;
+}
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ── TICKER ── */
+.ticker {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-inner {
+  display: inline-flex;
+  gap: 64px;
+  animation: ticker 20s linear infinite;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ticker-item span {
+  color: var(--accent);
+  font-size: 8px;
+}
+
+/* ── CATEGORIES ── */
+.section {
+  padding: 100px 48px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--accent2);
+}
+
+.section-link {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+.section-link:hover { border-color: var(--accent); }
+
+/* ── CATEGORY GRID ── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 280px 280px;
+  gap: 2px;
+}
+
+.cat-card {
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+
+.cat-card:first-child {
+  grid-row: 1 / 3;
+}
+
+.cat-bg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+.cat-card:hover .cat-bg {
+  transform: scale(1.05);
+}
+
+.cat-bg-1 { background: linear-gradient(145deg, #1c1a0f, #2e2a15, #1a1608); }
+.cat-bg-2 { background: linear-gradient(145deg, #0f1a1c, #152a2e, #081618); }
+.cat-bg-3 { background: linear-gradient(145deg, #1c0f0f, #2e1515, #180808); }
+.cat-bg-4 { background: linear-gradient(145deg, #100f1c, #18152e, #080818); }
+.cat-bg-5 { background: linear-gradient(145deg, #0f1c10, #152e18, #081808); }
+
+.cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+}
+
+.cat-content {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+}
+
+.cat-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.cat-count {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(240,235,227,0.5);
+  margin-top: 3px;
+}
+
+/* decorative shapes in categories */
+.cat-shape {
+  position: absolute;
+  opacity: 0.12;
+  transition: opacity 0.4s;
+}
+.cat-card:hover .cat-shape { opacity: 0.22; }
+
+.shape-circle {
+  width: 120px; height: 120px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  top: 30px; right: 30px;
+}
+
+.shape-rect {
+  width: 60px; height: 90px;
+  border: 1px solid var(--accent);
+  top: 40px; right: 40px;
+  transform: rotate(12deg);
+}
+
+/* ── PRODUCTS ── */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.product-card {
+  background: var(--card);
+  position: relative;
+  cursor: none;
+  group: true;
+}
+
+.product-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-img-bg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+}
+
+.product-card:hover .product-img-bg {
+  transform: scale(1.08);
+}
+
+.prod-bg-1 { background: linear-gradient(145deg, #1e1c14, #2d2a1a); }
+.prod-bg-2 { background: linear-gradient(145deg, #141e1e, #1a2d2d); }
+.prod-bg-3 { background: linear-gradient(145deg, #1e1414, #2d1a1a); }
+.prod-bg-4 { background: linear-gradient(145deg, #14141e, #1a1a2d); }
+
+.product-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.product-badge.new { background: var(--text); }
+.product-badge.sale { background: var(--red); }
+
+.product-actions {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(10,9,8,0.95), transparent);
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  display: flex;
+  gap: 8px;
+}
+
+.product-card:hover .product-actions {
+  transform: translateY(0);
+}
+
+.add-cart {
+  flex: 1;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: background 0.2s;
+}
+.add-cart:hover { background: var(--accent2); }
+
+.wishlist-btn {
+  width: 40px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: none;
+  font-size: 14px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wishlist-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--accent); }
+
+.product-info {
+  padding: 18px 20px 24px;
+}
+
+.product-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.product-sub {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.product-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.price-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--accent);
+}
+
+.price-old {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* product shape decorations */
+.prod-deco {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.deco-tri {
+  width: 0; height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 90px solid var(--accent);
+}
+
+.deco-ring {
+  width: 100px; height: 100px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+}
+
+.deco-sq {
+  width: 80px; height: 80px;
+  border: 2px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+.deco-line {
+  width: 1px; height: 120px;
+  background: var(--accent);
+}
+
+/* ── BANNER ── */
+.banner {
+  margin: 0 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 380px;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner-left {
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-tag {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.banner-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+
+.banner-title strong {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.banner-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 36ch;
+  margin-bottom: 36px;
+}
+
+.banner-right {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #161208 0%, #2a2010 50%, #160e04 100%);
+}
+
+.banner-right::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+
+.banner-right::after {
+  content: '50%\A OFF';
+  white-space: pre;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  color: var(--accent);
+  opacity: 0.12;
+  line-height: 0.9;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.sale-number {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.sale-number .big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 100px;
+  font-weight: 300;
+  color: var(--accent);
+  line-height: 0.85;
+}
+
+.sale-number .small {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  padding: 100px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+
+.nl-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.nl-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.nl-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nl-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 16px 24px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.nl-input:focus { border-color: var(--accent); }
+.nl-input::placeholder { color: var(--muted); }
+
+.nl-row {
+  display: flex;
+  gap: 12px;
+}
+
+.nl-input.half { flex: 1; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 60px 48px 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-brand .logo {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.footer-brand p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 30ch;
+}
+
+.footer-col h4 {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: var(--text); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.socials {
+  display: flex;
+  gap: 16px;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 13px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.social-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(201,168,76,0.07);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Reveal on scroll simulation */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Toast notification ── */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  padding: 16px 24px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  z-index: 1000;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.toast span { color: var(--accent); }
+
+@media (max-width: 900px) {
+  nav { padding: 18px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 0 24px 60px; padding-top: 120px; }
+  .section { padding: 60px 24px; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .cat-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .cat-card:first-child { grid-row: 1; grid-column: 1 / 3; }
+  .banner { margin: 0 24px; grid-template-columns: 1fr; }
+  .banner-right { display: none; }
+  .newsletter { grid-template-columns: 1fr; gap: 32px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">✓ Added to cart — <span>1 item</span></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">NÒVA</div>
+  <ul class="nav-links">
+    <li><a href="#">New Arrivals</a></li>
+    <li><a href="#">Living</a></li>
+    <li><a href="#">Lighting</a></li>
+    <li><a href="#">Textiles</a></li>
+    <li><a href="#">Outdoor</a></li>
+    <li><a href="#">Sale</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" style="color:var(--muted);font-size:13px;text-decoration:none;">🔍</a>
+    <button class="cart-btn">Bag<span class="cart-count" id="cartCount">0</span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">New Collection 2026</p>
+    <h1 class="hero-title">Objects<br>of <em>Desire</em></h1>
+    <p class="hero-desc">Discover curated pieces that transform everyday spaces into environments of quiet luxury and intentional beauty.</p>
+    <div class="hero-cta">
+      <button class="btn-primary">Shop Collection</button>
+      <button class="btn-ghost">Lookbook</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image">
+      <div class="hero-product-mock">
+        <div class="mock-product-img">
+          <div class="mock-lamp">
+            <div class="lamp-shade"></div>
+            <div class="lamp-stem"></div>
+            <div class="lamp-base"></div>
+          </div>
+        </div>
+        <p class="mock-product-label">Arc Floor Lamp No. 3</p>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">2,400+</div>
+        <div class="stat-label">Curated Items</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48</div>
+        <div class="stat-label">Designers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item">Free shipping over ₹4,999 <span>◆</span></div>
+    <div class="ticker-item">New arrivals every Friday <span>◆</span></div>
+    <div class="ticker-item">Handcrafted &amp; sustainable <span>◆</span></div>
+    <div class="ticker-item">Easy 30-day returns <span>◆</span></div>
+    <div class="ticker-item">Exclusive member discounts <span>◆</span></div>
+    <div class="ticker-item">Free shipping over ₹4,999 <span>◆</span></div>
+    <div class="ticker-item">New arrivals every Friday <span>◆</span></div>
+    <div class="ticker-item">Handcrafted &amp; sustainable <span>◆</span></div>
+    <div class="ticker-item">Easy 30-day returns <span>◆</span></div>
+    <div class="ticker-item">Exclusive member discounts <span>◆</span></div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section reveal">
+  <div class="section-header">
+    <h2 class="section-title">Shop by<br><em>Category</em></h2>
+    <a href="#" class="section-link">All categories →</a>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-card">
+      <div class="cat-bg cat-bg-1" style="height:100%"></div>
+      <div class="cat-shape shape-circle"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-name">Living Room</div>
+        <div class="cat-count">248 items</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg cat-bg-2"></div>
+      <div class="cat-shape shape-rect"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-name">Lighting</div>
+        <div class="cat-count">124 items</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg cat-bg-3"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-name">Bedroom</div>
+        <div class="cat-count">186 items</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg cat-bg-4"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-name">Textiles</div>
+        <div class="cat-count">312 items</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-bg cat-bg-5"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-content">
+        <div class="cat-name">Outdoor</div>
+        <div class="cat-count">97 items</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section reveal" style="padding-top:20px">
+  <div class="section-header">
+    <h2 class="section-title">Featured<br><em>Pieces</em></h2>
+    <a href="#" class="section-link">View all →</a>
+  </div>
+  <div class="product-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-bg prod-bg-1"></div>
+        <div class="prod-deco deco-ring"></div>
+        <span class="product-badge new">New</span>
+        <div class="product-actions">
+          <button class="add-cart" onclick="addToCart()">Add to Bag</button>
+          <button class="wishlist-btn">♡</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Wabi Lounge Chair</div>
+        <div class="product-sub">Ash wood · Natural linen</div>
+        <div class="product-price">
+          <span class="price-main">₹42,500</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-bg prod-bg-2"></div>
+        <div class="prod-deco deco-sq"></div>
+        <span class="product-badge sale">−30%</span>
+        <div class="product-actions">
+          <button class="add-cart" onclick="addToCart()">Add to Bag</button>
+          <button class="wishlist-btn">♡</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Arc Floor Lamp No. 3</div>
+        <div class="product-sub">Brass · Marble base</div>
+        <div class="product-price">
+          <span class="price-main">₹18,900</span>
+          <span class="price-old">₹27,000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-bg prod-bg-3"></div>
+        <div class="prod-deco deco-tri"></div>
+        <div class="product-actions">
+          <button class="add-cart" onclick="addToCart()">Add to Bag</button>
+          <button class="wishlist-btn">♡</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Kyoto Side Table</div>
+        <div class="product-sub">Solid walnut · Oiled finish</div>
+        <div class="product-price">
+          <span class="price-main">₹31,200</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-bg prod-bg-4"></div>
+        <div class="prod-deco deco-line"></div>
+        <span class="product-badge new">New</span>
+        <div class="product-actions">
+          <button class="add-cart" onclick="addToCart()">Add to Bag</button>
+          <button class="wishlist-btn">♡</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Linen Throw · Dusk</div>
+        <div class="product-sub">100% Belgian linen</div>
+        <div class="product-price">
+          <span class="price-main">₹8,400</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SALE BANNER -->
+<div class="banner reveal">
+  <div class="banner-left">
+    <p class="banner-tag">Seasonal Sale</p>
+    <h2 class="banner-title">Up to <strong>50% off</strong><br>select pieces</h2>
+    <p class="banner-text">Limited-time reductions on our most-loved furniture and lighting. Shop while stocks last.</p>
+    <button class="btn-primary" style="width:fit-content">Explore Sale</button>
+  </div>
+  <div class="banner-right">
+    <div class="sale-number">
+      <div class="big">50</div>
+      <div class="small">Percent Off</div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter reveal">
+  <div>
+    <p style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Stay in the loop</p>
+    <h2 class="nl-title">Minimal updates.<br>Maximum taste.</h2>
+    <p class="nl-subtitle">Join 28,000 members receiving curated design inspiration, first access to collections, and exclusive offers.</p>
+  </div>
+  <form class="nl-form" onsubmit="return false">
+    <div class="nl-row">
+      <input class="nl-input half" type="text" placeholder="First name">
+      <input class="nl-input half" type="text" placeholder="Last name">
+    </div>
+    <input class="nl-input" type="email" placeholder="Email address">
+    <button class="btn-primary" style="width:100%;padding:16px;font-size:11px">Subscribe →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">NÒVA</span>
+      <p>A curated collection of modern objects for people who believe that beautiful things make for a beautiful life.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Living</a></li>
+        <li><a href="#">Lighting</a></li>
+        <li><a href="#">Textiles</a></li>
+        <li><a href="#">Outdoor</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Designers</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Stockists</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Track Order</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 NÒVA. All rights reserved.</p>
+    <div class="socials">
+      <a href="#" class="social-link">ig</a>
+      <a href="#" class="social-link">pi</a>
+      <a href="#" class="social-link">tt</a>
+      <a href="#" class="social-link">in</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 5 + 'px';
+    cursor.style.top = e.clientY - 5 + 'px';
+    ring.style.left = e.clientX - 18 + 'px';
+    ring.style.top = e.clientY - 18 + 'px';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Cart
+  let cartItems = 0;
+  function addToCart() {
+    cartItems++;
+    document.getElementById('cartCount').textContent = cartItems;
+    const toast = document.getElementById('toast');
+    toast.querySelector('span').textContent = cartItems + (cartItems === 1 ? ' item' : ' items');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+</script>
+</body>
+</html>
